@@ -5,38 +5,60 @@
 //       steps {
 //         sh 'npm install'
 //       }
-//     }       
+//     }
 //     // stage('Test') {
 //     //   steps {
-        
+
 //     //   }
 //     // }
 //   }
 // }
 
+// pipeline {
+//     environment {
+//         registry = 'hitheshk/docker-deployment'
+//         registryCredential = 'dockerhub'
+//         dockerImage = ''
+//     }
+//     agent any
+//     stages {
+//         stage('Building image') {
+//             steps {
+//                 script {
+//                     dockerImage = docker.build registry + ":$BUILD_NUMBER"
+//                 }
+//             }
+//         }
+//         stage('Deploy Image') {
+//             steps {
+//                 script {
+//                     docker.withRegistry( '', registryCredential )
+//                     {
+//                         dockerImage.push()
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }
 
-pipeline {  environment {
-    registry = "hitheshk/docker-deployment"
-    registryCredential = 'dockerhub'
-     dockerImage = ''
-  }  
-  agent any 
-   stages {
-    stage('Building image') {
-      steps{
-        script {
-          dockerImage = docker.build registry + ":$BUILD_NUMBER"
+pipeline {
+    agent any
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building..'
+            }
         }
-      }
+        stage('Test') {
+            steps {
+                echo 'Testing..'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying....'
+            }
+        }
     }
-    stage('Deploy Image') {
-    steps{   
-       script {
-        docker.withRegistry( '', registryCredential ) {
-        dockerImage.push()
-      }
-    }
-  }
-}
-  }
 }

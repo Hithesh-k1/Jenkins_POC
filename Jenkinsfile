@@ -42,22 +42,53 @@
 //     }
 // }
 
+// pipeline {
+//     agent any
+//     stages {
+//         stage('Build') {
+//             steps {
+//                 echo 'Building..'
+//             }
+//         }
+//         stage('Test') {
+//             steps {
+//                 echo 'Testing..'
+//             }
+//         }
+//         stage('Deploy') {
+//             steps {
+//                 echo 'Deploying....'
+//             }
+//         }
+//     }
+// }
+
+
 pipeline {
     agent any
     stages {
-        stage('Build') {
+        stage('SCM') {
             steps {
-                echo 'Building..'
+                git url: 'https://github.com/Hithesh-k1/Jenkins_POC.git'
             }
         }
-        stage('Test') {
+        stage('build && SonarQube analysis') {
             steps {
-                echo 'Testing..'
+                withSonarQubeEnv('My SonarQube Server') {
+                    // Optionally use a Maven environment you've configured already
+                    withMaven(maven:'Maven 3.5') {
+                        sh 'mvn clean package sonar:sonar'
+                    }
+                }
             }
         }
-        stage('Deploy') {
+        stage('Quality Gate') {
             steps {
-                echo 'Deploying....'
+                timeout(time: 1, unit: 'HOURS') {
+                    // Parameter indicates whether to set pipeline to UNSTABLE if Quality Gate fails
+                    // true = set pipeline to UNSTABLE, false = don't
+                    waitForQualityGate abortPipeline: true
+                }
             }
         }
     }

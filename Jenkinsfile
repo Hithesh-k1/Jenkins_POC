@@ -85,7 +85,7 @@ pipeline {
         //     }
         // }
 
-        tage('Sonarqube analysis') {
+        stage('Sonarqube analysis') {
             steps {
                 script {
                     scannerHome = tool 'SonarScanner'

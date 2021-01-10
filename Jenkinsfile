@@ -71,27 +71,38 @@ pipeline {
                 git url: 'https://github.com/Hithesh-k1/Jenkins_POC.git'
             }
         }
-        stage('Sonarqube') {
-            environment {
-                scannerHome = tool 'SonarQubeScanner'
-            }
-            steps {
-                withSonarQubeEnv('sonarqube') {
-                    sh "${scannerHome}/bin/sonar-scanner"
-                }
-                timeout(time: 10, unit: 'MINUTES') {
-                    waitForQualityGate abortPipeline: true
-                }
-            }
-        }
-        // stage('Quality Gate') {
+        // stage('Sonarqube') {
+        //     environment {
+        //         scannerHome = tool 'SonarQubeScanner'
+        //     }
         //     steps {
-        //         timeout(time: 1, unit: 'HOURS') {
-        //             // Parameter indicates whether to set pipeline to UNSTABLE if Quality Gate fails
-        //             // true = set pipeline to UNSTABLE, false = don't
+        //         withSonarQubeEnv('sonarqube') {
+        //             sh "${scannerHome}/bin/sonar-scanner"
+        //         }
+        //         timeout(time: 10, unit: 'MINUTES') {
         //             waitForQualityGate abortPipeline: true
         //         }
         //     }
         // }
+
+        tage('Sonarqube analysis') {
+            steps {
+                script {
+                    scannerHome = tool 'SonarScanner'
+                }
+                withSonarQubeEnv('SonarQube') {
+                    sh "${scannerHome}/bin/sonar-scanner.sh"
+                }
+            }
+        }
+    // stage('Quality Gate') {
+    //     steps {
+    //         timeout(time: 1, unit: 'HOURS') {
+    //             // Parameter indicates whether to set pipeline to UNSTABLE if Quality Gate fails
+    //             // true = set pipeline to UNSTABLE, false = don't
+    //             waitForQualityGate abortPipeline: true
+    //         }
+    //     }
+    // }
     }
 }

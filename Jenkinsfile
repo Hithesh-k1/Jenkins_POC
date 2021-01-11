@@ -162,7 +162,7 @@ pipeline {
             }
             steps {
                 echo 'Scanning....'
-                withSonarQubeEnv('Sonarqube') {
+                withSonarQubeEnv('SonarQube') {
                 sh "${scannerHome}/bin/sonar-scanner"
              }
                 timeout(time: 10, unit: 'MINUTES') {

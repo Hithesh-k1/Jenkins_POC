@@ -71,6 +71,18 @@ pipeline {
                 git url: 'https://github.com/Hithesh-k1/Jenkins_POC.git'
             }
         }
+            stage('Build') {
+            steps {
+                echo 'Building...'
+                sh ' npm install'
+                sh ' npm run build'
+            }
+            }
+        stage('Test') {
+            steps {
+                echo 'Testing..'
+            }
+        }
         // stage('Sonarqube') {
         //     environment {
         //         scannerHome = tool 'SonarQubeScanner'

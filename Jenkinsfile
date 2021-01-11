@@ -160,6 +160,7 @@ pipeline {
             environment {
                  scannerHome = tool 'sonar_scanner'
             }
+            
             steps {
                 echo 'Scanning....'
                 withSonarQubeEnv('SonarQube') {

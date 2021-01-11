@@ -159,13 +159,13 @@ pipeline {
         }
         stage('Sonarqube') {
             environment {
-                
+
                  scannerHome = tool 'sonar_scanner'
             }
 
             steps {
                 echo 'Scanning....'
-                withSonarQubeEnv('SonarQube') {
+                withSonarQubeEnv('Sonarqube') {
                 sh "${scannerHome}/bin/sonar-scanner"
              }
                 timeout(time: 10, unit: 'MINUTES') {

@@ -154,6 +154,7 @@ pipeline {
             steps {
                 echo 'Testing...'
                 // sh 'npm test'
+                
             }
         }
         stage('Sonarqube') {

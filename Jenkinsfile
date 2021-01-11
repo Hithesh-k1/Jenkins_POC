@@ -154,11 +154,12 @@ pipeline {
             steps {
                 echo 'Testing...'
                 // sh 'npm test'
-                
+
             }
         }
         stage('Sonarqube') {
             environment {
+                
                  scannerHome = tool 'sonar_scanner'
             }
 
